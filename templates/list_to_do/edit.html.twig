@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ListToDo{% endblock %}
+
+{% block body %}
+    <h1>Edit ListToDo</h1>
+
+    {{ include('list_to_do/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('list_to_do_index') }}">back to list</a>
+
+    {{ include('list_to_do/_delete_form.html.twig') }}
+{% endblock %}

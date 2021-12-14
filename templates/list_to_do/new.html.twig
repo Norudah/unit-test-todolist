@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ListToDo{% endblock %}
+
+{% block body %}
+    <h1>Create new ListToDo</h1>
+
+    {{ include('list_to_do/_form.html.twig') }}
+
+    <a href="{{ path('list_to_do_index') }}">back to list</a>
+{% endblock %}
