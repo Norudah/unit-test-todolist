@@ -51,6 +51,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $list;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $birthdate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +177,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setList(?ListToDo $list): self
     {
         $this->list = $list;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTimeInterface
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(?\DateTimeInterface $birthdate): self
+    {
+        $this->birthdate = $birthdate;
 
         return $this;
     }
