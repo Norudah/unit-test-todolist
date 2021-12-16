@@ -34,15 +34,17 @@ class ListToDo
      */
     private $update_at;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="list", cascade={"persist", "remove"})
-     */
-    private $owner;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Item::class, mappedBy="listToDo")
      */
     private $items;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="list", cascade={"persist", "remove"})
+     */
+    private $owner;
 
     public function __construct()
     {
@@ -90,28 +92,6 @@ class ListToDo
         return $this;
     }
 
-    public function getUserList(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setUserList(?User $owner): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($owner === null && $this->owner !== null) {
-            $this->owner->setList(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($owner !== null && $owner->getList() !== $this) {
-            $owner->setList($this);
-        }
-
-        $this->owner = $owner;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Item[]
      */
@@ -138,6 +118,28 @@ class ListToDo
                 $item->setListToDo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($owner === null && $this->owner !== null) {
+            $this->owner->setList(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($owner !== null && $owner->getList() !== $this) {
+            $owner->setList($this);
+        }
+
+        $this->owner = $owner;
 
         return $this;
     }

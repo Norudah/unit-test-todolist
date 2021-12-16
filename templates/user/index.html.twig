@@ -10,10 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
+                <th>Roles</th>
                 <th>Password</th>
-                <th>Is_valid</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,10 +20,8 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
-                <td>{{ user.isValid ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
@@ -33,7 +29,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
