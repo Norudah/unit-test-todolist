@@ -4,10 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Carbon\Carbon;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -56,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private Carbon $birthdate;
+    private $birthdate;
 
     public function getId(): ?int
     {
@@ -194,30 +192,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
-    // Custom functions
-
-    public function createToDoList() : void {
-        // ...code
-    }
-
-    public function isAgeValid()
-    {
-        return $this->birthdate->addYears(13)->isBefore(Carbon::now());
-    }
-
-    public function isValid() : bool {
-        if (
-            filter_var($this->email, FILTER_VALIDATE_EMAIL)
-            && !empty($this->lastname) && is_string($this->lastname)
-            && !empty($this->firstname) && is_string($this->firstname)
-            && $this->isAgeValid()
-            && (strlen($this->password) >= 8 && strlen($this->password) <= 40)
-        ) {
-            return true;
-        }
-        return false;
-    }
-
 }
