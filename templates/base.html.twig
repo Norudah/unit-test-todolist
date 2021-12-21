@@ -20,8 +20,18 @@
     {% endblock %}
 </head>
 <body class="red lighten-5">
+    
+    <nav>
+        <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">Ma liste</a></li>
+            <li><a href="badges.html">Se connecter</a></li>
+        </ul>
+        </div>
+    </nav>
 
-    <div class="container">
+    <div class="container main-content">
 
         {% block body %}{% endblock %}
         
@@ -31,7 +41,7 @@
                 {{ label }}
             {% endfor %}
         {% endfor %}
-    
+
     </div>
 </body>
 </html>
