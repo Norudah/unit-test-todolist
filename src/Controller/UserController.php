@@ -79,4 +79,10 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/check-user', name: 'check_user', methods: ['GET'])]
+    public function check_user(): bool
+    {
+        return true;
+    }
 }
