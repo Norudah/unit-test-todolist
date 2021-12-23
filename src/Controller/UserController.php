@@ -85,4 +85,19 @@ class UserController extends AbstractController
     {
         return true;
     }
+
+    #[Route('/new-list', name: 'new_list')]
+    public function new_list(): void {
+
+        /*  
+            1. Instancier l'user et récupérer ses données
+                Il est co, et on récupères juste ses propriétés
+            2. $user->getList
+            3. IF (null ou something)
+                3.1 null : On créer la liste
+                3.2 something : On créer pas la liste
+            4. render
+        */
+
+    }
 }
