@@ -28,7 +28,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $user->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -90,14 +90,20 @@ class UserController extends AbstractController
     public function new_list(): void {
 
         /*  
-            1. Instancier l'user et récupérer ses données
-                Il est co, et on récupères juste ses propriétés
+            1. Instancier l'user
             2. $user->getList
             3. IF (null ou something)
                 3.1 null : On créer la liste
                 3.2 something : On créer pas la liste
             4. render
         */
+
+    }
+
+    #[Route('/new-item', name: 'new_item')]
+    public function new_item(): void {
+
+        
 
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Carbon\Carbon;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +19,10 @@ class UserType extends AbstractType
             ->add('password')
             ->add('firstname')
             ->add('lastname')
+            ->add('birthdate', BirthdayType::class, [
+                'placeholder' => 'Select a value',
+                'data' => new Carbon()
+            ]);
         ;
     }
 

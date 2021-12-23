@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
+use App\Entity\ListToDo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -202,5 +205,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->birthdate = $birthdate;
 
         return $this;
+    }
+
+    public function isValid(): bool
+    {
+
+        $variable = Carbon::instance($this->birthdate);
+
+        if (
+            filter_var($this->email, FILTER_VALIDATE_EMAIL)
+            && !empty($this->lastname) && is_string($this->lastname)
+            && !empty($this->firstname) && is_string($this->firstname)
+            && strlen($this->password) >= 8 && strlen($this->password) <= 40
+            && $variable->addYears(13)->isBefore(Carbon::now())
+            
+        ) {
+            return true;
+        }
+        
+        return false;
     }
 }
