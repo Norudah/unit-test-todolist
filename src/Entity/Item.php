@@ -89,4 +89,17 @@ class Item
 
         return $this;
     }
+
+    public function isValid(): bool {
+
+        if (
+            !empty($this->name) && is_string($this->name)
+            && strlen($this->content) <=1000
+            && $this->creation_date
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }

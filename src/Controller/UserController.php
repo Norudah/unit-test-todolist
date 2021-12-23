@@ -103,7 +103,14 @@ class UserController extends AbstractController
     #[Route('/new-item', name: 'new_item')]
     public function new_item(): void {
 
-        
+        /*  
+            1. Instancier l'user
+            2. $user->getList->canAddItem()
+            3. IF (true ou false)
+                3.1 true : On créer son item
+                3.2 false : On créer pas son item
+            4. render
+        */
 
     }
 }

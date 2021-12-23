@@ -143,4 +143,8 @@ class ListToDo
 
         return $this;
     }
+
+    public function canAddItem(){
+        return count($this->items) < 10;
+    }
 }

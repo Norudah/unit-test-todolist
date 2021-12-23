@@ -210,14 +210,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isValid(): bool
     {
 
-        $variable = Carbon::instance($this->birthdate);
+        $birthdate = Carbon::instance($this->birthdate);
 
         if (
             filter_var($this->email, FILTER_VALIDATE_EMAIL)
             && !empty($this->lastname) && is_string($this->lastname)
             && !empty($this->firstname) && is_string($this->firstname)
             && strlen($this->password) >= 8 && strlen($this->password) <= 40
-            && $variable->addYears(13)->isBefore(Carbon::now())
+            && $birthdate->addYears(13)->isBefore(Carbon::now())
         ) {
             return true;
         }

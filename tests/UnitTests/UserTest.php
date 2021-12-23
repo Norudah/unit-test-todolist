@@ -34,19 +34,19 @@ final class UserTest extends TestCase
   /* Global validation */
 
   public function testEverythingIsOkaaaaaaaaay() {
-    $this->assertEquals(true, $this->user->isValid());
+    $this->assertTrue($this->user->isValid());
   }
 
   /* AGE CHECK */  
 
   public function testInvalidAgeTooYoung() {
     $this->user->setBirthdate(Carbon::now()->subYears(10));
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
   public function testValidAgeOld() {
     $this->user->setBirthdate(Carbon::now()->subYears(90));
-    $this->assertEquals(true, $this->user->isValid());
+    $this->assertTrue($this->user->isValid());
   }
 
 
@@ -54,22 +54,22 @@ final class UserTest extends TestCase
 
   public function testValidPasswordCharacters() {
     $this->user->setPassword("1234567890");
-    $this->assertEquals(true, $this->user->isValid());
+    $this->assertTrue($this->user->isValid());
   }
 
   public function testValidPassword40Characters() {
     $this->user->setPassword("1234567890123456789012345678901234567890");
-    $this->assertEquals(true, $this->user->isValid());
+    $this->assertTrue($this->user->isValid());
   }
 
   public function testInvalidPasswordTooLowCharacter() {
       $this->user->setPassword("toto");
-      $this->assertEquals(false, $this->user->isValid());
+      $this->assertFalse($this->user->isValid());
   }
 
   public function testInvalidPasswordTooMuchCharacter() {
       $this->user->setEmail("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis aliquam lorem quis sodales. Suspendisse potenti. Praesent odio magna, aliquet ut elit id, accumsan venenatis nisl. Donec id aliquam enim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam convallis interdum.");
-      $this->assertEquals(false, $this->user->isValid());
+      $this->assertFalse($this->user->isValid());
   }
   
 
@@ -77,22 +77,22 @@ final class UserTest extends TestCase
  
   public function testInvalidEmailType() {
     $this->user->setEmail("toto");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
   public function testInvalidEmailWithOneSpecialCharacter() {
     $this->user->setEmail("hello@to)to.com");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
   public function testInvalidEmailWithoutExtension() {
     $this->user->setEmail("toto@toto");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
   public function testInvalidEmailWithoutDomainName() {
     $this->user->setEmail("toto@.com");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
   
@@ -100,7 +100,7 @@ final class UserTest extends TestCase
   
   public function testInvalidFirstnameEmpty() {
     $this->user->setFirstname("");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
 
@@ -108,7 +108,7 @@ final class UserTest extends TestCase
   
   public function testInvalidLastnameEmpty() {
     $this->user->setLastname("");
-    $this->assertEquals(false, $this->user->isValid());
+    $this->assertFalse($this->user->isValid());
   }
 
 
@@ -122,12 +122,12 @@ final class UserTest extends TestCase
   */
 
   public function testCanCreateList() {
-    $this->assertEquals(true, $this->user->canCreateList());
+    $this->assertTrue($this->user->canCreateList());
   }
   
   public function testCannotCreateList() {
     $this->user->setList(new ListToDo());
-    $this->assertEquals(false, $this->user->canCreateList());
+    $this->assertFalse($this->user->canCreateList());
   }
 
 
