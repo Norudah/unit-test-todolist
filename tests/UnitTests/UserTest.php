@@ -2,6 +2,7 @@
 
 namespace App\Tests\UnitTests;
 
+use App\Entity\ListToDo;
 use App\Entity\User;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
@@ -23,11 +24,18 @@ final class UserTest extends TestCase
     ->setBirthdate(Carbon::now()->subYears(13));
   }
 
-    /* Global validation */
+  /*
+  *
+  *
+  * IS VALID
+  *
+  */
 
-    public function testEverythingIsOkaaaaaaaaay() {
-      $this->assertEquals(true, $this->user->isValid());
-    }
+  /* Global validation */
+
+  public function testEverythingIsOkaaaaaaaaay() {
+    $this->assertEquals(true, $this->user->isValid());
+  }
 
   /* AGE CHECK */  
 
@@ -102,4 +110,26 @@ final class UserTest extends TestCase
     $this->user->setLastname("");
     $this->assertEquals(false, $this->user->isValid());
   }
+
+
+
+
+  /*
+  *
+  *
+  * CAN CREATE A LIST
+  *
+  */
+
+  public function testCanCreateList() {
+    $this->assertEquals(true, $this->user->canCreateList());
+  }
+  
+  public function testCannotCreateList() {
+    $this->user->setList(new ListToDo());
+    $this->assertEquals(false, $this->user->canCreateList());
+  }
+
+
+
 }

@@ -218,11 +218,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             && !empty($this->firstname) && is_string($this->firstname)
             && strlen($this->password) >= 8 && strlen($this->password) <= 40
             && $variable->addYears(13)->isBefore(Carbon::now())
-            
         ) {
             return true;
         }
-        
+
         return false;
+    }
+
+    public function canCreateList() : bool {
+        return empty($this->list) ;
     }
 }
