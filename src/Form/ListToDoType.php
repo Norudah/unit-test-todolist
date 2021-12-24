@@ -13,7 +13,6 @@ class ListToDoType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('create_at')
             ->add('update_at')
         ;
     }

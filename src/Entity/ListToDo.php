@@ -6,6 +6,7 @@ use App\Repository\ListToDoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Carbon\Carbon;
 
 /**
  * @ORM\Entity(repositoryClass=ListToDoRepository::class)
@@ -25,7 +26,7 @@ class ListToDo
     private $name;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="date")
      */
     private $create_at;
 
@@ -46,7 +47,7 @@ class ListToDo
 
     public function __construct() {
         $this->items = new ArrayCollection(); // TODO : Peut être à supprimer 
-        // $this->create_at 
+        $this->create_at = Carbon::now();
     }
 
     public function getId(): ?int
@@ -66,12 +67,12 @@ class ListToDo
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?\DateTimeInterface
     {
         return $this->create_at;
     }
 
-    public function setCreateAt(\DateTimeImmutable $create_at): self
+    public function setCreateAt(\DateTimeInterface $create_at): self
     {
         $this->create_at = $create_at;
 
