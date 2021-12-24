@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,7 +102,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/new-item', name: 'new_item')]
-    public function new_item(): void {
+    public function new_item(ItemRepository $itemRepository): void {
 
         /*  
             1. Instancier l'user

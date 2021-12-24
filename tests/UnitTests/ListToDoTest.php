@@ -22,7 +22,6 @@ final class ListToDoTest extends TestCase
         for ($i = 0; $i < 9; $i++) {
             $this->listToDo->addItem(new Item()); // 9 items
         }
-
     }
 
     /**

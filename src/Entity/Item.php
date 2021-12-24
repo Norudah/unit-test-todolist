@@ -107,6 +107,7 @@ class Item
             !empty($this->name) && is_string($this->name)
             && strlen($this->content) <=1000
             && $this->creation_date
+            && $this->listToDo
         ) {
             return true;
         }
@@ -117,6 +118,7 @@ class Item
     public function canBeCreated() {
         // Unicité
         // 30 minutes
+
 
         
     }

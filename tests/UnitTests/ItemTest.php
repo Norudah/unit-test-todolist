@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 
 use App\Entity\Item;
 use App\Entity\ListToDo;
+use App\Repository\ItemRepository;
 use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase 
@@ -14,6 +15,7 @@ final class ItemTest extends TestCase
 
   protected function setUp(): void {
 
+    echo "yo";
     $this->listToDo = new ListToDo();
     $this->item = new Item();
     $this->item
@@ -30,13 +32,30 @@ final class ItemTest extends TestCase
     $this->assertTrue($this->item->isValid());
   } 
 
-  public function testCanNotCreateItem() {
-    $item2 = new Item();
-    $item2->setName("Une tâche nulle")
-      ->setContent("Description d'une tâche vraiment nulle.")
-      ->setListToDo($this->listToDo);
+  public function testCanNotCreateItemNameEmpty() {
+    $this->item->setName("");
+    $this->assertFalse($this->item->isValid());
+  }
 
-    $this->assertFalse($item2->isValid());
+  public function testCanNotCreateItemListToDoEmpty()
+  {
+    $item = new Item();
+    $item
+    ->setName("Une tâche nulle")
+    ->setContent("Description d'une tâche vraiment nulle.");
+
+    $this->assertFalse($item->isValid());
+  }
+
+  public function testCanNotCreateItemContentOver1000Character()
+  {
+    $content = "";
+    for($i = 0; $i < 101; $i++)
+    {
+      $content .= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus orci. ";
+    }
+    $this->item->setContent($content);
+    $this->assertFalse($this->item->isValid());
   } 
 
   /**
@@ -45,6 +64,7 @@ final class ItemTest extends TestCase
 
   public function testValidItemNotPresentInList() {
 
+    // $check = $itemRepository->findOneBy(['name' => "Une tâche nulle"]);
     
     
   }
@@ -52,7 +72,5 @@ final class ItemTest extends TestCase
   public function testInvalidItemAlreadyPresentInList() {
 
   }
-
-
 
 }
