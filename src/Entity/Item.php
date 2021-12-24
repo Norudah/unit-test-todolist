@@ -114,6 +114,13 @@ class Item
         return false;
     }
 
+    public function canBeCreated() {
+        // Unicité
+        // 30 minutes
+
+        
+    }
+
     public function __toString()
     {
         return $this->name;

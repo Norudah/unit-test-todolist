@@ -19,26 +19,21 @@ final class ListToDoTest extends TestCase
     {
         $this->listToDo = new ListToDo();
 
-        for ($i = 0; $i <= 8; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $this->listToDo->addItem(new Item()); // 9 items
         }
 
     }
 
-    /*
-    *
-    *
-    * CAN ADD ITEM
-    *
-    */
+    /**
+     * List has not too many items
+     */
 
-    public function testCanAddItem()
-    {
+    public function testTodoValid9Items() {
         $this->assertTrue(true, $this->listToDo->canAddItem());
     }
 
-    public function testCanNotAddItem()
-    {
+    public function testTodoInvalidTooManyItems() {
         $this->listToDo->addItem(new Item()); // 10 items
         $this->assertFalse($this->listToDo->canAddItem());
     }

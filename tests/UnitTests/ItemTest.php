@@ -22,6 +22,10 @@ final class ItemTest extends TestCase
     ->setListToDo($this->listToDo);
   }
 
+  /**
+   * Valid item
+   */
+
   public function testCanCreateItem() {
     $this->assertTrue($this->item->isValid());
   } 
@@ -34,5 +38,21 @@ final class ItemTest extends TestCase
 
     $this->assertFalse($item2->isValid());
   } 
+
+  /**
+   * Unicité
+   */
+
+  public function testValidItemNotPresentInList() {
+
+    
+    
+  }
+
+  public function testInvalidItemAlreadyPresentInList() {
+
+  }
+
+
 
 }
