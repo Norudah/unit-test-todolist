@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Item;
+use App\Entity\ListToDo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ItemType extends AbstractType
 {
@@ -14,7 +16,14 @@ class ItemType extends AbstractType
         $builder
             ->add('name')
             ->add('content')
-            ->add('creation_date')
+            ->add('listToDo', EntityType::class, [
+                'class' => ListToDo::class,
+                'choice_label' => 'name',
+            
+                // used to render a select box, check boxes or radios
+                'multiple' => false,
+                // 'expanded' => true,
+            ])
         ;
     }
 

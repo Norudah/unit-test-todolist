@@ -34,8 +34,6 @@ class ListToDo
      */
     private $update_at;
 
-
-
     /**
      * @ORM\OneToMany(targetEntity=Item::class, mappedBy="listToDo")
      */
@@ -46,9 +44,9 @@ class ListToDo
      */
     private $owner;
 
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
+    public function __construct() {
+        $this->items = new ArrayCollection(); // TODO : Peut être à supprimer 
+        // $this->create_at 
     }
 
     public function getId(): ?int

@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ItemRepository::class)
+ * @UniqueEntity(
+ *     fields={"name", "listToDo"},
+ *     errorPath="name",
+ *     message="Tu as déjà une tache de ce nom dans ta liste."
+ * )
  */
 class Item
 {
@@ -23,7 +30,7 @@ class Item
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
@@ -36,6 +43,10 @@ class Item
      * @ORM\ManyToOne(targetEntity=ListToDo::class, inversedBy="items")
      */
     private $listToDo;
+
+    public function __construct() {
+        $this->creation_date = Carbon::now();
+    }
 
     public function getId(): ?int
     {
@@ -101,5 +112,10 @@ class Item
         }
 
         return false;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

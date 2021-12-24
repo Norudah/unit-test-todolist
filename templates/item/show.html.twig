@@ -23,6 +23,10 @@
                 <th>Creation_date</th>
                 <td>{{ item.creationDate ? item.creationDate|date('Y-m-d') : '' }}</td>
             </tr>
+            <tr>
+                <th>Associated listToDo</th>
+                <td>{{ item.listToDo.name }}</td>
+            </tr>
         </tbody>
     </table>
 

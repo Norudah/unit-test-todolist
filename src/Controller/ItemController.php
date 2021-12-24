@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Item;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
+use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,8 @@ class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // $item->setCreationDate(Carbon::now());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
