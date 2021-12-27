@@ -35,7 +35,7 @@ class Item
     private $content;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $creation_date;
 
@@ -85,7 +85,6 @@ class Item
     public function setCreationDate(\DateTimeInterface $creation_date): self
     {
         $this->creation_date = $creation_date;
-
         return $this;
     }
 
@@ -116,10 +115,8 @@ class Item
     }
 
     public function canBeCreated() {
-        // Unicité
-        // 30 minutes
-
-
+        
+        
         
     }
 

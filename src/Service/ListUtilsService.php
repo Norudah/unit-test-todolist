@@ -9,8 +9,6 @@ use Exception;
 
 class ListUtilsService
 {
-
-
     private $doctrine;
     private $itemRepository;
 

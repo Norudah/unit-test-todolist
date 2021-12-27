@@ -19,18 +19,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
 
-    #[Route('/new-item', name: 'new_item')]
-    public function new_item(ListUtilsService $listUtilsService): void
+    #[Route('/{id}/new-item', name: 'new_item')]
+    public function new_item(User $user,ListUtilsService $listUtilsService, ItemRepository $itemRepository): void
     {
 
         $em = $this->getDoctrine()->getManager();
-        $listToDo = $em->getRepository(ListToDo::class)->find(1);
-        $item = new Item();
-        $item->setContent('')
-        ->setListToDo($listToDo)
-        ->setName('Une tâche nulle');
+        if($user->getList())
+        {
+            if($user->getList()->canAddItem())
+            $item = new Item();
+            $item->setContent('')
+            ->setName('pouet')
+            ->setListToDo($user->getList());
 
-        dd($listUtilsService->isItemUnique($item));
+            if(
+                $item->isValid() 
+                && $listUtilsService->isItemUnique($item)
+                && empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))
+            )
+            {
+                dd("create item");
+            }else{
+                dd("vas chier TU NE PEUX PAS CREER BATARD");
+            }
+        }else{
+            dd("vas chier t'as pas de list VAS EN CREER UNE MNT");
+        }
+
         /*  
             1. Instancier l'user
             2. $user->getList->canAddItem()

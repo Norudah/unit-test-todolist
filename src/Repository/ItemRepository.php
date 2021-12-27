@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Item;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,26 @@ class ItemRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findLastItemIfGreaterThan30Minutes($listToDoId)
+    {
+        // automatically knows to select Products
+        // the "i" is an alias you'll use in the rest of the query
+
+        $dateBefore = Carbon::now()->subMinutes(30)->format('Y-m-d\TH:i:s');
+        $dateNow = Carbon::now()->format('Y-m-d\TH:i:s');
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.listToDo = :listToDoId')
+            ->andWhere('i.creation_date >= :dateBefore')
+            ->andWhere('i.creation_date <= :dateNow')
+            ->setParameter('listToDoId', $listToDoId)
+            ->setParameter('dateBefore', $dateBefore)
+            ->setParameter('dateNow', $dateNow);
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+
+        // to get just one result:
+        // $product = $query->setMaxResults(1)->getOneOrNullResult();
+    }
 }
