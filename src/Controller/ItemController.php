@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\ListToDo;
 use App\Form\ItemType;
 use App\Repository\ItemRepository;
 use Carbon\Carbon;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/item')]
 class ItemController extends AbstractController
 {
+
     #[Route('/', name: 'item_index', methods: ['GET'])]
     public function index(ItemRepository $itemRepository): Response
     {
@@ -30,8 +32,6 @@ class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $item->setCreationDate(Carbon::now());
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($item);
             $entityManager->flush();
@@ -82,5 +82,7 @@ class ItemController extends AbstractController
 
         return $this->redirectToRoute('item_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 
 }

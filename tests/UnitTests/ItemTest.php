@@ -3,6 +3,7 @@ namespace App\Tests\UnitTests;
 
 require 'vendor/autoload.php';
 
+use App\Controller\UserController;
 use App\Entity\Item;
 use App\Entity\ListToDo;
 use App\Repository\ItemRepository;
@@ -15,7 +16,6 @@ final class ItemTest extends TestCase
 
   protected function setUp(): void {
 
-    echo "yo";
     $this->listToDo = new ListToDo();
     $this->item = new Item();
     $this->item
@@ -65,7 +65,8 @@ final class ItemTest extends TestCase
   public function testValidItemNotPresentInList() {
 
     // $check = $itemRepository->findOneBy(['name' => "Une tâche nulle"]);
-    
+    $itemController = new ItemController();
+    dd($itemController->check_unicity());
     
   }
 
