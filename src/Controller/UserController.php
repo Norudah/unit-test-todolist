@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Item;
 use App\Entity\ListToDo;
+use App\Form\ItemType;
 use App\Form\UserType;
 use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
@@ -20,29 +21,51 @@ class UserController extends AbstractController
 {
 
     #[Route('/{id}/new-item', name: 'new_item')]
-    public function new_item(User $user,ListUtilsService $listUtilsService, ItemRepository $itemRepository): void
+    public function new_item(User $user, ListUtilsService $listUtilsService, ItemRepository $itemRepository, Request $request): Response
     {
 
         $em = $this->getDoctrine()->getManager();
-        if($user->getList())
-        {
-            if($user->getList()->canAddItem())
-            $item = new Item();
-            $item->setContent('')
-            ->setName('pouet')
-            ->setListToDo($user->getList());
+        if ($user->getList()) {                             // if user have list
+            if ($user->getList()->canAddItem())           // if user have < 10 items
+                $item = new Item();
 
-            if(
-                $item->isValid() 
-                && $listUtilsService->isItemUnique($item)
-                && empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))
-            )
-            {
-                dd("create item");
-            }else{
-                dd("Erreur : item invalide ou dois attendre <30min");
+            $item->setContent('')
+                ->setName('pouet')
+                ->setListToDo($user->getList());
+
+
+            if (empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))) {  // last user.item > 30 min
+                $item = new Item();
+                $form = $this->createForm(ItemType::class, $item);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($item);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+                }
+
+                return $this->renderForm('item/new.html.twig', [
+                    'item' => $item,
+                    'form' => $form,
+                ]);
+            } else {
+                dd("Erreur : dernier item créer il y a moins de 30min");
             }
-        }else{
+
+
+            // if (
+            //     $item->isValid()
+            //     && $listUtilsService->isItemUnique($item)
+            //     && empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))
+            // ) {
+            //     dd("create item");
+            // } else {
+            //     dd("Erreur : item invalide ou dois attendre 30 min");
+            // }
+        } else {
             dd("Erreur : pas de liste");
         }
 
@@ -63,10 +86,10 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'user_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -93,7 +116,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -114,7 +137,7 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
@@ -130,7 +153,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/new-list', name: 'new_list')]
-    public function new_list(): void {
+    public function new_list(): void
+    {
 
         /*  
             1. Instancier l'user
@@ -140,11 +164,5 @@ class UserController extends AbstractController
                 3.2 something : On créer pas la liste
             4. render
         */
-
     }
-
-
-
-
-   
 }
