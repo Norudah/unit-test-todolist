@@ -224,8 +224,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return false;
     }
-
-    public function canCreateList() : bool {
-        return empty($this->list) ;
-    }
 }

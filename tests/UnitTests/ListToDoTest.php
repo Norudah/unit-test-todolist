@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\UnitTests;
 
 require 'vendor/autoload.php';
@@ -10,7 +11,7 @@ use App\Entity\User;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 
-final class ListToDoTest extends TestCase 
+final class ListToDoTest extends TestCase
 {
 
     private ListToDo $listToDo;
@@ -28,13 +29,14 @@ final class ListToDoTest extends TestCase
      * List has not too many items
      */
 
-    public function testTodoValid9Items() {
+    public function testListIsValidWith9Items()
+    {
         $this->assertTrue(true, $this->listToDo->canAddItem());
     }
 
-    public function testTodoInvalidTooManyItems() {
+    public function testListIsInvalidWithMoreThan10Items()
+    {
         $this->listToDo->addItem(new Item()); // 10 items
         $this->assertFalse($this->listToDo->canAddItem());
     }
-
 }
