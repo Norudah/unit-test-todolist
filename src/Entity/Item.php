@@ -114,12 +114,6 @@ class Item
         return false;
     }
 
-    public function canBeCreated() {
-        
-        
-        
-    }
-
     public function __toString()
     {
         return $this->name;

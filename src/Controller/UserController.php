@@ -65,6 +65,12 @@ class UserController extends AbstractController
                         && $item->isValid()
                     ) {
 
+                        if(count($user->getList()->getItems()) === 8)
+                        {
+                            $serviceMail = new EmailSenderService();
+                            $serviceMail->sendMail($user, "Tu ne peux plus que rajouter 2 items.");
+                        }
+                        
                         $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($item);
                         $entityManager->flush();

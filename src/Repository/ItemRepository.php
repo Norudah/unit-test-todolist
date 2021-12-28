@@ -67,7 +67,5 @@ class ItemRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
 
-        // to get just one result:
-        // $product = $query->setMaxResults(1)->getOneOrNullResult();
     }
 }

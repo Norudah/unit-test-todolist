@@ -66,7 +66,7 @@ final class ItemTest extends TestCase
    * Unicité
    */
 
-  public function testItemNameIsUniqueInList()
+  /* public function testItemNameIsUniqueInList()
   {
     $ListService = new ListUtilsService();
 
@@ -78,5 +78,16 @@ final class ItemTest extends TestCase
 
   public function testInvalidItemAlreadyPresentInList()
   {
+  } */
+
+  public function testEmailSendWhen8Items()
+  {
+    /* $this->externalAPI = $this->getMockBuilder(ExternalAPI::class)
+      ->onlyMethods(['checkUserExist'])
+      ->getMock(); */
+
+      
+
   }
+  
 }
