@@ -82,31 +82,9 @@ class UserController extends AbstractController
             } else {
                 dd("Ta deja 10 items");
             }
-
-
-
-
-            // if (
-            //     $item->isValid()
-            //     && $listUtilsService->isItemUnique($item)
-            //     && empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))
-            // ) {
-            //     dd("create item");
-            // } else {
-            //     dd("Erreur : item invalide ou dois attendre 30 min");
-            // }
         } else {
             dd("Erreur : pas de liste");
         }
-
-        /*  
-            1. Instancier l'user
-            2. $user->getList->canAddItem()
-            3. IF (true ou false)
-                3.1 true : On créer son item
-                3.2 false : On créer pas son item
-            4. render
-        */
     }
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
