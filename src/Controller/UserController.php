@@ -39,7 +39,12 @@ class UserController extends AbstractController
                 $form = $this->createForm(ItemType::class, $item);
                 $form->handleRequest($request);
 
-                if ($form->isSubmitted() && $form->isValid()) {
+                if (
+                    $form->isSubmitted()
+                    && $form->isValid()
+                    && $item->isValid()
+                ) {
+
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($item);
                     $entityManager->flush();
