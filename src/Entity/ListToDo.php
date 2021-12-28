@@ -36,16 +36,17 @@ class ListToDo
     private $update_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="listToDo")
+     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="listToDo" , cascade={"persist", "remove"})
      */
     private $items;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="list", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="list")
      */
     private $owner;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->items = new ArrayCollection(); // TODO : Peut être à supprimer 
         $this->create_at = Carbon::now();
     }
@@ -143,7 +144,8 @@ class ListToDo
         return $this;
     }
 
-    public function canAddItem(){
+    public function canAddItem()
+    {
         return count($this->items) < 10;
     }
 }

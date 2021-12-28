@@ -25,7 +25,8 @@
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                    <a href="{{ path('new_item', {'id': user.id}) }}">add item</a>
+                    <a href="{{ path('new_toDoList', {'id': user.id}) }}">add TodoList</a>
+                    <a href="{{ path('new_item', {'id': user.id}) }}">add item</a>        
                 </td>
             </tr>
         {% else %}

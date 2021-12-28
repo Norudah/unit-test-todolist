@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Item;
 use App\Entity\ListToDo;
 use App\Form\ItemType;
+use App\Form\ListToDoType;
 use App\Form\UserType;
 use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
@@ -20,45 +21,69 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
 
+    #[Route('/{id}/new-toDolist', name: 'new_toDoList')]
+    public function new_toDoList(User $user, Request $request): Response
+    {
+        if ($user->getList()) {
+            dd("Ta deja une liste");
+        } else {
+            $listToDo = new ListToDo();
+            $form = $this->createForm(ListToDoType::class, $listToDo);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user->setList($listToDo));
+                $entityManager->persist($listToDo);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('list_to_do/new.html.twig', [
+                'list_to_do' => $listToDo,
+                'form' => $form,
+            ]);
+        }
+    }
+
     #[Route('/{id}/new-item', name: 'new_item')]
-    public function new_item(User $user, ListUtilsService $listUtilsService, ItemRepository $itemRepository, Request $request): Response
+    public function new_item(User $user, ItemRepository $itemRepository, Request $request): Response
     {
 
         $em = $this->getDoctrine()->getManager();
         if ($user->getList()) {                             // if user have list
-            if ($user->getList()->canAddItem())           // if user have < 10 items
-                $item = new Item();
+            if ($user->getList()->canAddItem()) {           // if user have < 10 items
+                if (empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))) {  // last user.item > 30 min
+                    $item = new Item();
+                    $form = $this->createForm(ItemType::class, $item);
+                    $form->handleRequest($request);
 
-            $item->setContent('')
-                ->setName('pouet')
-                ->setListToDo($user->getList());
+                    if (
+                        $form->isSubmitted()
+                        && $form->isValid()
+                        && $item->isValid()
+                    ) {
 
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($item);
+                        $entityManager->flush();
 
-            if (empty($itemRepository->findLastItemIfGreaterThan30Minutes($user->getList()->getId()))) {  // last user.item > 30 min
-                $item = new Item();
-                $form = $this->createForm(ItemType::class, $item);
-                $form->handleRequest($request);
+                        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+                    }
 
-                if (
-                    $form->isSubmitted()
-                    && $form->isValid()
-                    && $item->isValid()
-                ) {
-
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->persist($item);
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+                    return $this->renderForm('item/new.html.twig', [
+                        'item' => $item,
+                        'form' => $form,
+                    ]);
+                } else {
+                    dd("Erreur : dernier item créer il y a moins de 30min");
                 }
-
-                return $this->renderForm('item/new.html.twig', [
-                    'item' => $item,
-                    'form' => $form,
-                ]);
             } else {
-                dd("Erreur : dernier item créer il y a moins de 30min");
+                dd("Ta deja 10 items");
             }
+
+
 
 
             // if (

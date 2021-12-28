@@ -21,7 +21,7 @@ class ListToDoController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'list_to_do_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'list_to_do_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $listToDo = new ListToDo();
@@ -50,7 +50,7 @@ class ListToDoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'list_to_do_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'list_to_do_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ListToDo $listToDo): Response
     {
         $form = $this->createForm(ListToDoType::class, $listToDo);
@@ -71,8 +71,10 @@ class ListToDoController extends AbstractController
     #[Route('/{id}', name: 'list_to_do_delete', methods: ['POST'])]
     public function delete(Request $request, ListToDo $listToDo): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$listToDo->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $listToDo->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $listToDo->getOwner()->setList(null);
+            $entityManager->persist($listToDo->getOwner());
             $entityManager->remove($listToDo);
             $entityManager->flush();
         }
