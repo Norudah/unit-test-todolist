@@ -40,10 +40,10 @@ class UserController extends AbstractController
             {
                 dd("create item");
             }else{
-                dd("vas chier TU NE PEUX PAS CREER BATARD");
+                dd("Erreur : item invalide ou dois attendre <30min");
             }
         }else{
-            dd("vas chier t'as pas de list VAS EN CREER UNE MNT");
+            dd("Erreur : pas de liste");
         }
 
         /*  
