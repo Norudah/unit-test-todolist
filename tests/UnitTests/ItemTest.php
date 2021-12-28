@@ -8,6 +8,7 @@ use App\Controller\ItemController;
 use App\Entity\Item;
 use App\Entity\ListToDo;
 use App\Repository\ItemRepository;
+use App\Service\ListUtilsService;
 use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase
@@ -21,8 +22,8 @@ final class ItemTest extends TestCase
     $this->listToDo = new ListToDo();
     $this->item = new Item();
     $this->item
-      ->setName("Une tâche nulle")
-      ->setContent("Description d'une tâche vraiment nulle.")
+      ->setName("oneTask")
+      ->setContent("oneTask description ")
       ->setListToDo($this->listToDo);
   }
 
@@ -67,6 +68,8 @@ final class ItemTest extends TestCase
 
   public function testItemNameIsUniqueInList()
   {
+    $ListService = new ListUtilsService();
+
 
     // $check = $itemRepository->findOneBy(['name' => "Une tâche nulle"]);
     $itemController = new ItemController();
