@@ -25,7 +25,7 @@ class UserController extends AbstractController
     public function new_toDoList(User $user, Request $request): Response
     {
         if ($user->getList()) {
-            dd("Ta deja une liste");
+            dd("T'as déjà une liste");
         } else {
             $listToDo = new ListToDo();
             $form = $this->createForm(ListToDoType::class, $listToDo);
@@ -48,7 +48,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/new-item', name: 'new_item')]
-    public function new_item(User $user, ItemRepository $itemRepository, Request $request): Response
+    public function new_item(User $user, ItemRepository $itemRepository, Request $request, ListUtilsService $listService): Response
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -64,16 +64,17 @@ class UserController extends AbstractController
                         && $form->isValid()
                         && $item->isValid()
                     ) {
-
-                        if(count($user->getList()->getItems()) === 8)
-                        {
-                            $serviceMail = new EmailSenderService();
-                            $serviceMail->sendMail($user, "Tu ne peux plus que rajouter 2 items.");
-                        }
-                        
                         $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($item);
                         $entityManager->flush();
+
+                        // if($user->getList()->hasToPreventUserByEMail())
+                        // {
+                        //     $serviceMail = new EmailSenderService();
+                        //     $serviceMail->sendMail($user, "Tu ne peux plus que rajouter 2 items.");
+                        // }
+
+                        $listService->preventUserFromReaching8Items($user, $user->getList());
 
                         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
                     }
@@ -83,10 +84,10 @@ class UserController extends AbstractController
                         'form' => $form,
                     ]);
                 } else {
-                    dd("Erreur : dernier item créer il y a moins de 30min");
+                    dd("Erreur : dernier item créé il y a moins de 30min");
                 }
             } else {
-                dd("Ta deja 10 items");
+                dd("T'as deja 10 items");
             }
         } else {
             dd("Erreur : pas de liste");

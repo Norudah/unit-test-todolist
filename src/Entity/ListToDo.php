@@ -148,4 +148,8 @@ class ListToDo
     {
         return count($this->items) < 10;
     }
+
+    public function hasToPreventUserByEMail() {
+        return count($this->items) === 8;
+    }
 }

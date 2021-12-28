@@ -80,14 +80,14 @@ final class ItemTest extends TestCase
   {
   } */
 
-  public function testEmailSendWhen8Items()
-  {
-    /* $this->externalAPI = $this->getMockBuilder(ExternalAPI::class)
-      ->onlyMethods(['checkUserExist'])
-      ->getMock(); */
+  // public function testEmailSendWhen8Items()
+  // {
+  //   /* $this->externalAPI = $this->getMockBuilder(ExternalAPI::class)
+  //     ->onlyMethods(['checkUserExist'])
+  //     ->getMock(); */
 
       
 
-  }
+  // }
   
 }
