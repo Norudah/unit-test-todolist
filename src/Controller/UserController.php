@@ -67,12 +67,14 @@ class UserController extends AbstractController
                     $item = new Item();
                     $form = $this->createForm(ItemType::class, $item);
                     $form->handleRequest($request);
+                    $item->setListToDo($user->getList());
 
                     if (
                         $form->isSubmitted()
                         && $form->isValid()
                         && $item->isValid()
                     ) {
+
                         $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($item);
                         $entityManager->flush();
@@ -87,7 +89,6 @@ class UserController extends AbstractController
 
                         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
                     }
-
                     return $this->renderForm('item/new.html.twig', [
                         'item' => $item,
                         'form' => $form,

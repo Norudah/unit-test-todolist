@@ -16,14 +16,14 @@ class ItemType extends AbstractType
         $builder
             ->add('name')
             ->add('content')
-            ->add('listToDo', EntityType::class, [
+            /* ->add('listToDo', EntityType::class, [
                 'class' => ListToDo::class,
                 'choice_label' => 'name',
             
                 // used to render a select box, check boxes or radios
                 'multiple' => false,
                 // 'expanded' => true,
-            ])
+            ]) */
         ;
     }
 
