@@ -22,6 +22,8 @@ final class ItemTest extends TestCase
       ->setName("oneTask")
       ->setContent("oneTask description ")
       ->setListToDo($this->listToDo);
+
+    $this->listToDo->addItem($this->item);
   }
 
   /**
@@ -67,6 +69,32 @@ final class ItemTest extends TestCase
    * Unicité
    */
 
+  public function testItemNameIsUniqueInList()
+  {
+
+    $newItem = new Item();
+    $newItem->setName('pouet')
+      ->setContent("oneTask description ")
+      ->setListToDo($this->listToDo);
+
+    foreach ($this->listToDo->getItems() as $item) {
+      echo (' / ' . $item->getName());
+    }
+
+    $this->assertTrue($newItem->isUnique());
+  }
+
+  public function testItemNameIsNotUniqueInList()
+  {
+
+    $newItem = new Item();
+    $newItem->setName('oneTask')
+      ->setContent("oneTask description ")
+      ->setListToDo($this->listToDo);
+
+    $this->assertFalse(($newItem->isUnique()));
+  }
+
   /* public function testItemNameIsUniqueInList()
   {
     $ListService = new ListUtilsService();
@@ -82,5 +110,5 @@ final class ItemTest extends TestCase
   } */
 
   // }
-  
+
 }
