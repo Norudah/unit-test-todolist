@@ -24,6 +24,15 @@ class UserController extends AbstractController
     #[Route('/{id}/new-toDolist', name: 'new_toDoList')]
     public function new_toDoList(User $user, Request $request): Response
     {
+        /*  
+            1. Instancier l'user
+            2. $user->getList
+            3. IF (null ou something)
+                3.1 null : On créer la liste
+                3.2 something : On créer pas la liste
+            4. render
+        */
+
         if ($user->getList()) {
             dd("T'as déjà une liste");
         } else {
@@ -165,19 +174,5 @@ class UserController extends AbstractController
     public function check_user(): bool
     {
         return true;
-    }
-
-    #[Route('/new-list', name: 'new_list')]
-    public function new_list(): void
-    {
-
-        /*  
-            1. Instancier l'user
-            2. $user->getList
-            3. IF (null ou something)
-                3.1 null : On créer la liste
-                3.2 something : On créer pas la liste
-            4. render
-        */
     }
 }

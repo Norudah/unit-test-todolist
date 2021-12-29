@@ -4,11 +4,8 @@ namespace App\Tests\UnitTests;
 
 require 'vendor/autoload.php';
 
-use App\Controller\ItemController;
 use App\Entity\Item;
 use App\Entity\ListToDo;
-use App\Repository\ItemRepository;
-use App\Service\ListUtilsService;
 use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase
@@ -35,6 +32,10 @@ final class ItemTest extends TestCase
   {
     $this->assertTrue($this->item->isValid());
   }
+
+  /**
+   * Invalid item
+   */
 
   public function testItemCannotBeCreateWithEmptyItemName()
   {
@@ -79,14 +80,6 @@ final class ItemTest extends TestCase
   public function testInvalidItemAlreadyPresentInList()
   {
   } */
-
-  // public function testEmailSendWhen8Items()
-  // {
-  //   /* $this->externalAPI = $this->getMockBuilder(ExternalAPI::class)
-  //     ->onlyMethods(['checkUserExist'])
-  //     ->getMock(); */
-
-      
 
   // }
   

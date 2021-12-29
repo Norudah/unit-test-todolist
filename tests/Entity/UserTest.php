@@ -1,5 +1,9 @@
 <?php
 
+/* 
+  TEST ENTITY USER
+*/
+
 namespace App\Tests\Entity;
 
 use App\Entity\User;

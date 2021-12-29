@@ -135,7 +135,7 @@ final class UserTest extends TestCase
 
 
   /*
-  * CAN CREATE A LIST
+  * TEST CREATION LIST
   */
 
   public function testUserHaveNotListSoCanCreateList()

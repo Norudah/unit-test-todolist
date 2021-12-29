@@ -10,7 +10,6 @@ use App\Entity\ListToDo;
 use App\Entity\User;
 use App\Service\EmailSenderService;
 use App\Service\ListUtilsService;
-use Carbon\Carbon;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -56,18 +55,6 @@ final class ListToDoTest extends TestCase
      * sendMail
      */
 
-
-    // public function testEmailListDidNotReached8Items() {
-
-    //     // Une liste avec < 6 items
-
-    //     $this->emailService->expects($this->any())
-    //         ->method('sendMail')
-    //         ->willReturn(true);
-            
-
-    //     echo $this->emailService->sendMail(new User(), "bonjour je suis un contenu ?");
-
     //     // listHass8items()
     //     // true -> envoie un mail
     //     // false -> avoie pas de mail
@@ -88,7 +75,7 @@ final class ListToDoTest extends TestCase
         
      }
 
-     public function testEmailListDidReached8ItemsAndSuccessfulSent() {
+     public function testEmailListDidReached8ItemsAndEmailSuccessfulSent() {
 
         $user = new User();
         $user->setEmail("blabla@bla.com");
@@ -105,12 +92,11 @@ final class ListToDoTest extends TestCase
 
         $this->listService = new ListUtilsService($this->emailService);
 
-        // TODO : Faire le mock pour forcer le sendMail() à retourner true
         $this->assertTrue($this->listService->preventUserFromReaching8Items($user, $this->listToDo));
         
      }
 
-     public function testEmailListDidReached8ItemsAndUnsuccessfulSent() {
+     public function testEmailListDidReached8ItemsButEmailUnsuccessfulSent() {
 
         $user = new User();
         $user->setEmail("blabla@bla.com");

@@ -2,14 +2,9 @@
 
 namespace App\Service;
 
-use Exception;
-use App\Entity\Item;
 use App\Entity\User;
 use App\Entity\ListToDo;
-use App\Repository\ItemRepository;
 use App\Service\EmailSenderService;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ListUtilsService
 {
