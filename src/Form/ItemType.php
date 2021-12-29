@@ -23,8 +23,7 @@ class ItemType extends AbstractType
                 // used to render a select box, check boxes or radios
                 'multiple' => false,
                 // 'expanded' => true,
-            ]) */
-        ;
+            ]) */;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

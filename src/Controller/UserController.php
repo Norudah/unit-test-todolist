@@ -70,11 +70,12 @@ class UserController extends AbstractController
                     $item->setListToDo($user->getList());
 
                     if (
+
                         $form->isSubmitted()
                         && $form->isValid()
                         && $item->isValid()
+                        && $item->isUnique()
                     ) {
-
                         $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($item);
                         $entityManager->flush();
@@ -85,8 +86,8 @@ class UserController extends AbstractController
                         //     $serviceMail->sendMail($user, "Tu ne peux plus que rajouter 2 items.");
                         // }
 
-                        $listService->preventUserFromReaching8Items($user, $user->getList());
 
+                        $listService->preventUserFromReaching8Items($user, $user->getList());
                         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
                     }
                     return $this->renderForm('item/new.html.twig', [

@@ -44,7 +44,8 @@ class Item
      */
     private $listToDo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->creation_date = Carbon::now();
     }
 
@@ -100,11 +101,12 @@ class Item
         return $this;
     }
 
-    public function isValid(): bool {
+    public function isValid(): bool
+    {
 
         if (
             !empty($this->name) && is_string($this->name)
-            && strlen($this->content) <=1000
+            && strlen($this->content) <= 1000
             && $this->creation_date
             && $this->listToDo
         ) {
@@ -112,6 +114,11 @@ class Item
         }
 
         return false;
+    }
+
+    public function isUnique()
+    {
+        return array_search($this->name, array_column($this->listToDo->getItems()->getValues(), 'name')) === false;
     }
 
     public function __toString()
