@@ -80,13 +80,6 @@ class UserController extends AbstractController
                         $entityManager->persist($item);
                         $entityManager->flush();
 
-                        // if($user->getList()->hasToPreventUserByEMail())
-                        // {
-                        //     $serviceMail = new EmailSenderService();
-                        //     $serviceMail->sendMail($user, "Tu ne peux plus que rajouter 2 items.");
-                        // }
-
-
                         $listService->preventUserFromReaching8Items($user, $user->getList());
                         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
                     }

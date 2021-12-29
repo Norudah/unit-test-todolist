@@ -29,8 +29,8 @@ final class ListToDoTest extends TestCase
         }
 
         $this->emailService = $this->getMockBuilder(EmailSenderService::class)
-        ->onlyMethods(["sendMail"])
-        ->getMock();
+            ->onlyMethods(["sendMail"])
+            ->getMock();
 
         $this->listService = new ListUtilsService(new EmailSenderService());
     }
@@ -55,12 +55,8 @@ final class ListToDoTest extends TestCase
      * sendMail
      */
 
-    //     // listHass8items()
-    //     // true -> envoie un mail
-    //     // false -> avoie pas de mail
-    // }
-
-     public function testEmailListDidNotReached8Items() {
+    public function testEmailListDidNotReached8Items()
+    {
 
         $user = new User();
         $user->setEmail("blabla@bla.com");
@@ -72,10 +68,10 @@ final class ListToDoTest extends TestCase
         }
 
         $this->assertFalse($this->listService->preventUserFromReaching8Items($user, $this->listToDo));
-        
-     }
+    }
 
-     public function testEmailListDidReached8ItemsAndEmailSuccessfulSent() {
+    public function testEmailListDidReached8ItemsAndEmailSuccessfulSent()
+    {
 
         $user = new User();
         $user->setEmail("blabla@bla.com");
@@ -87,16 +83,16 @@ final class ListToDoTest extends TestCase
         }
 
         $this->emailService->expects($this->any())
-        ->method('sendMail')
-        ->willReturn(true);
+            ->method('sendMail')
+            ->willReturn(true);
 
         $this->listService = new ListUtilsService($this->emailService);
 
         $this->assertTrue($this->listService->preventUserFromReaching8Items($user, $this->listToDo));
-        
-     }
+    }
 
-     public function testEmailListDidReached8ItemsButEmailUnsuccessfulSent() {
+    public function testEmailListDidReached8ItemsButEmailUnsuccessfulSent()
+    {
 
         $user = new User();
         $user->setEmail("blabla@bla.com");
@@ -108,10 +104,10 @@ final class ListToDoTest extends TestCase
         }
 
         $this->emailService->expects($this->any())
-        ->method('sendMail')
-        ->willThrowException(new Exception("A problem has been performed while attempting to send an email."));
+            ->method('sendMail')
+            ->willThrowException(new Exception("A problem has been performed while attempting to send an email."));
 
         $this->expectException(Exception::class);
         $this->listService->preventUserFromReaching8Items($user, $this->listToDo);
-     }
+    }
 }
