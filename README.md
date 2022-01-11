@@ -12,3 +12,5 @@ To run :
 
 1. `docker-compose up`
 2. `docker compose exec php composer install`
+
+test
